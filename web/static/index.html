@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Tra cứu lịch bác sĩ, đặt lịch khám và nhận hỗ trợ từ trợ lý AI." />
+    <meta name="theme-color" content="#063c47" />
+    <title>Vinmec Care AI — Đặt lịch khám</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Đi tới nội dung chính</a>
+
+    <header class="topbar">
+      <div class="shell topbar__inner">
+        <a class="brand" href="/" aria-label="Vinmec Care AI - Trang chủ">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="img">
+              <path d="M16 4v24M4 16h24" />
+            </svg>
+          </span>
+          <span>
+            <strong>Vinmec Care AI</strong>
+            <small>Trợ lý lịch khám</small>
+          </span>
+        </a>
+
+        <nav class="topnav" aria-label="Điều hướng chính">
+          <a href="#booking">Đặt lịch</a>
+          <a href="#assistant">Trợ lý AI</a>
+          <a href="#lookup">Tra cứu</a>
+        </nav>
+
+        <div class="system-status" id="system-status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span>Đang kết nối</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="shell page">
+      <section class="page-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">ĐẶT LỊCH TRỰC TUYẾN</p>
+          <h1 id="page-title">Chọn đúng bác sĩ, đúng thời gian của bạn.</h1>
+        </div>
+        <p class="page-heading__note">
+          Lịch trống được cập nhật ngay khi có lượt đặt mới. Bạn sẽ nhận mã xác nhận sau khi hoàn tất.
+        </p>
+      </section>
+
+      <section class="booking-grid" id="booking" aria-label="Đặt lịch khám">
+        <div class="panel schedule-panel">
+          <div class="panel__header">
+            <div>
+              <span class="step-label">BƯỚC 01</span>
+              <h2>Chọn lịch khám</h2>
+            </div>
+            <span class="secure-note">Lịch trống trực tiếp</span>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Bác sĩ</span>
+              <select id="doctor-select" aria-describedby="doctor-help">
+                <option value="">Đang tải danh sách…</option>
+              </select>
+              <small id="doctor-help">Chọn bác sĩ phù hợp với chuyên khoa cần khám.</small>
+            </label>
+
+            <label class="field">
+              <span>Ngày khám</span>
+              <input id="date-input" type="date" value="2026-09-20" />
+              <small>Lịch mẫu hiện có cho ngày 20–21/09/2026.</small>
+            </label>
+          </div>
+
+          <article class="doctor-card" id="doctor-card" aria-live="polite">
+            <div class="doctor-card__avatar" aria-hidden="true">BS</div>
+            <div class="doctor-card__body">
+              <p class="doctor-card__specialty">Đang tải dữ liệu</p>
+              <h3>Vui lòng chờ trong giây lát</h3>
+              <p>Hệ thống đang kết nối danh sách bác sĩ.</p>
+            </div>
+            <div class="doctor-card__meta">
+              <strong>—</strong>
+              <span>năm kinh nghiệm</span>
+            </div>
+          </article>
+
+          <div class="slot-section">
+            <div class="section-title-row">
+              <h3>Khung giờ còn trống</h3>
+              <span id="slot-count">Chưa chọn ngày</span>
+            </div>
+            <div class="slot-grid" id="slot-grid" aria-live="polite">
+              <p class="empty-state">Chọn bác sĩ và ngày khám để xem lịch.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel patient-panel">
+          <div class="panel__header">
+            <div>
+              <span class="step-label step-label--accent">BƯỚC 02</span>
+              <h2>Thông tin người khám</h2>
+            </div>
+          </div>
+
+          <div class="selection-summary" id="selection-summary">
+            <span class="selection-summary__icon" aria-hidden="true">⌁</span>
+            <div>
+              <small>LỊCH ĐANG CHỌN</small>
+              <strong>Chưa chọn khung giờ</strong>
+              <span>Vui lòng hoàn tất bước 01</span>
+            </div>
+          </div>
+
+          <form id="booking-form" novalidate>
+            <label class="field">
+              <span>Họ và tên</span>
+              <input name="patient_name" autocomplete="name" minlength="2" maxlength="100" placeholder="Nguyễn Văn Nam" required />
+            </label>
+
+            <div class="field-grid field-grid--compact">
+              <label class="field">
+                <span>Mã bệnh nhân</span>
+                <input name="patient_id" autocomplete="off" minlength="4" maxlength="24" placeholder="BN2026001" required />
+              </label>
+              <label class="field">
+                <span>Số điện thoại</span>
+                <input name="phone" type="tel" autocomplete="tel" minlength="8" maxlength="20" placeholder="090 123 4567" required />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Email <em>(không bắt buộc)</em></span>
+              <input name="email" type="email" autocomplete="email" maxlength="160" placeholder="ban@email.com" />
+            </label>
+
+            <label class="consent">
+              <input name="consent" type="checkbox" required />
+              <span>Tôi đồng ý cung cấp thông tin để xử lý yêu cầu đặt lịch.</span>
+            </label>
+
+            <button class="primary-button" id="booking-submit" type="submit" disabled>
+              <span>Xác nhận đặt lịch</span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <p class="form-note">Không thanh toán tại bước này. Nhân viên y tế có thể liên hệ để xác nhận.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="support-grid" id="assistant" aria-label="Hỗ trợ sau đặt lịch">
+        <article class="assistant-card">
+          <div class="assistant-card__intro">
+            <div class="ai-orb" aria-hidden="true"><span></span></div>
+            <div>
+              <p class="eyebrow eyebrow--light">TRỢ LÝ REACT AI</p>
+              <h2>Hỏi nhanh về lịch khám</h2>
+              <p>Trợ lý có thể tra lịch và đặt hẹn bằng ngôn ngữ tự nhiên.</p>
+            </div>
+          </div>
+
+          <div class="quick-prompts" aria-label="Câu hỏi gợi ý">
+            <button type="button" data-prompt="Tra cứu lịch bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, ngày 20/09/2026">Lịch bác sĩ Minh An</button>
+            <button type="button" data-prompt="Quy trình đặt lịch khám như thế nào?">Quy trình đặt lịch</button>
+          </div>
+
+          <div class="chat-log" id="chat-log" aria-live="polite">
+            <div class="message message--assistant">
+              <span>AI</span>
+              <p>Xin chào, tôi có thể giúp bạn tra lịch bác sĩ hoặc hướng dẫn đặt lịch.</p>
+            </div>
+          </div>
+
+          <form class="chat-form" id="chat-form">
+            <label class="sr-only" for="chat-input">Nhập câu hỏi</label>
+            <input id="chat-input" maxlength="2000" placeholder="Ví dụ: Bác sĩ Minh An còn lịch ngày 20/09?" autocomplete="off" required />
+            <button type="submit" aria-label="Gửi câu hỏi">Gửi <span aria-hidden="true">↗</span></button>
+          </form>
+          <p class="ai-disclaimer">AI có thể sai. Không sử dụng để chẩn đoán hoặc xử lý tình huống cấp cứu.</p>
+        </article>
+
+        <article class="lookup-card" id="lookup">
+          <span class="step-label">QUẢN LÝ LỊCH HẸN</span>
+          <h2>Tra cứu mã xác nhận</h2>
+          <p>Nhập mã đặt lịch và mã bệnh nhân để xem lại hoặc hủy lịch.</p>
+
+          <form id="lookup-form">
+            <label class="field">
+              <span>Mã đặt lịch</span>
+              <input name="booking_id" placeholder="VM-20260920-A1B2C3" required />
+            </label>
+            <label class="field">
+              <span>Mã bệnh nhân</span>
+              <input name="patient_id" placeholder="BN2026001" required />
+            </label>
+            <button class="secondary-button" type="submit">Tra cứu lịch hẹn</button>
+          </form>
+
+          <div id="lookup-result" class="lookup-result" aria-live="polite"></div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="shell">
+        <p><strong>Vinmec Care AI MVP</strong> · Kênh hỗ trợ đặt lịch thử nghiệm</p>
+        <p>Trường hợp khẩn cấp, hãy gọi cơ sở y tế gần nhất hoặc số cấp cứu 115.</p>
+      </div>
+    </footer>
+
+    <dialog class="confirmation-dialog" id="confirmation-dialog">
+      <div class="dialog-icon" aria-hidden="true">✓</div>
+      <p class="eyebrow">ĐẶT LỊCH THÀNH CÔNG</p>
+      <h2>Lịch khám của bạn đã được ghi nhận.</h2>
+      <p id="confirmation-copy"></p>
+      <div class="booking-code">
+        <span>MÃ XÁC NHẬN</span>
+        <strong id="confirmation-code"></strong>
+        <button type="button" id="copy-code">Sao chép mã</button>
+      </div>
+      <button class="primary-button" type="button" id="close-dialog">Hoàn tất</button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

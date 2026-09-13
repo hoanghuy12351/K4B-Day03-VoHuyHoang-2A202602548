@@ -1,5 +1,34 @@
 # 🏫 BÀI LAB 3: CHATBOT VS REACT AGENT — TỪ LÝ THUYẾT ĐẾN THỰC THI (MCP ENHANCED)
 
+## 🌐 WEB MVP — TRỢ LÝ ĐẶT LỊCH KHÁM
+
+Dự án có thêm một bản web MVP(Minimum Viable Product — sản phẩm khả dụng tối thiểu) bằng Python, gồm:
+
+- Tra cứu bác sĩ và khung giờ trống theo ngày.
+- Đặt, tra cứu và hủy lịch hẹn; dữ liệu lưu bằng SQLite(cơ sở dữ liệu nhẹ).
+- Trò chuyện với ReAct Agent(tác tử suy luận–hành động), tự dùng Gemini/OpenAI khi có API key(khóa truy cập), hoặc chạy Mock Offline(mô phỏng ngoại tuyến).
+- Giao diện responsive(thích ứng điện thoại/máy tính), kiểm tra đầu vào, giới hạn tần suất và API docs(tài liệu API) tại `/api/docs`.
+
+Khởi chạy:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python src/web_app.py
+```
+
+Mở `http://127.0.0.1:8000`. Cơ sở dữ liệu được tạo tự động tại `data/healthcare_mvp.db`.
+
+Đóng gói để triển khai bằng Docker(container chạy ứng dụng độc lập):
+
+```powershell
+docker build -t vinmec-care-ai .
+docker run --env-file .env -p 8000:8000 -v vinmec-data:/app/data vinmec-care-ai
+```
+
+Khi đưa lên môi trường thật, hãy thay dữ liệu bác sĩ mẫu, cấu hình HTTPS(kết nối web mã hóa), tên miền và API key qua biến môi trường; không đưa file `.env` vào Git.
+
 > **Mã bài học:** `DAY03-REACT-AGENT`  
 > **Hình thức thực hiện:** **CÁ NHÂN** *(Mỗi học viên tự làm và tự nộp 1 bài cá nhân)*  
 > **Quy chuẩn nộp bài:** Học viên Fork Repo này về GitHub cá nhân và đổi tên theo đúng cú pháp:  

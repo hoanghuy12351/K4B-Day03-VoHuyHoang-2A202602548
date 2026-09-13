@@ -1,0 +1,26 @@
+[
+  {
+    "step": 1,
+    "query": "tra cứu lịch võ huy hoàng",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "doctor_schedule_query",
+    "arguments": {
+      "specialty": "Tổng quát",
+      "appointment_date": "21/05/2024",
+      "doctor_name": "Võ Huy Hoàng"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy bác sĩ 'Võ Huy Hoàng' thuộc chuyên khoa 'Tổng quát'."
+    },
+    "latency_ms": 1641.82
+  },
+  {
+    "step": 2,
+    "query": "tra cứu lịch võ huy hoàng",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Dạ, hệ thống không tìm thấy thông tin của bác sĩ \"Võ Huy Hoàng\" thuộc chuyên khoa \"Tổng quát\" trong ngày 21/05/2024. \n\nBạn vui lòng kiểm tra lại họ tên bác sĩ, chuyên khoa hoặc ngày khám để tôi có thể hỗ trợ bạn tra cứu chính xác hơn nhé!",
+    "latency_ms": 1311.95
+  }
+]

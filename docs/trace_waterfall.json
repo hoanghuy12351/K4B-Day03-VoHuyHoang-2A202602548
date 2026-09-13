@@ -1,29 +1,170 @@
 [
   {
     "step": 1,
-    "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "query": "Chào bạn, hãy giới thiệu ngắn gọn quy trình đặt lịch khám tại Vinmec.",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Đây là câu hỏi hướng dẫn chung nên không cần gọi công cụ.",
+    "output": "Quy trình đặt lịch khám Vinmec gồm: chọn chuyên khoa và bác sĩ, tra cứu khung giờ trống, cung cấp thông tin bệnh nhân, xác nhận thời gian và nhận mã đặt lịch. Nội dung này chỉ mang tính hướng dẫn, không phải chẩn đoán y khoa.",
+    "latency_ms": 1069.46
   },
   {
     "step": 1,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tra cứu lịch làm việc của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, vào ngày 20/09/2026.",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "tool_name": "doctor_schedule_query",
     "arguments": {
-      "student_id": "SV2026001"
+      "doctor_name": "Nguyễn Minh An",
+      "specialty": "Tim mạch",
+      "appointment_date": "20/09/2026"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "doctor_id": "BS001",
+        "doctor_name": "Nguyễn Minh An",
+        "specialty": "Tim mạch",
+        "workplace": "Vinmec Times City",
+        "appointment_date": "20/09/2026",
+        "available_slots": [
+          "09:00",
+          "10:30",
+          "14:00"
+        ]
+      },
+      "message": "Có 3 khung giờ trống trong ngày 20/09/2026."
+    },
+    "latency_ms": 353.5
   },
   {
     "step": 2,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tra cứu lịch làm việc của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, vào ngày 20/09/2026.",
     "action_type": "FINAL_ANSWER",
-    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
-    "latency_ms": 10.0
+    "thought": "Đã đủ dữ liệu từ công cụ để tổng hợp câu trả lời cuối cùng.",
+    "output": "Bác sĩ Nguyễn Minh An (Tim mạch) làm việc tại Vinmec Times City ngày 20/09/2026. Các khung giờ còn trống: 09:00, 10:30, 14:00.",
+    "latency_ms": 348.75
+  },
+  {
+    "step": 1,
+    "query": "Đặt lịch khám Tim mạch cho bệnh nhân Nguyễn Văn Nam, mã BN2026001, với bác sĩ Nguyễn Minh An lúc 09:00 ngày 20/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "book_medical_appointment",
+    "arguments": {
+      "patient_id": "BN2026001",
+      "patient_name": "Nguyễn Văn Nam",
+      "doctor_name": "Nguyễn Minh An",
+      "specialty": "Tim mạch",
+      "datetime_str": "09:00 20/09/2026"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "booking_id": "VM-20260920-ACB309",
+        "patient_id": "BN2026001",
+        "patient_name": "Nguyễn Văn Nam",
+        "doctor_id": "BS001",
+        "doctor_name": "Nguyễn Minh An",
+        "specialty": "Tim mạch",
+        "workplace": "Vinmec Times City",
+        "datetime": "09:00 20/09/2026"
+      },
+      "message": "Đặt lịch thành công. Mã xác nhận VM-20260920-ACB309: bệnh nhân Nguyễn Văn Nam khám với bác sĩ Nguyễn Minh An lúc 09:00 ngày 20/09/2026."
+    },
+    "latency_ms": 346.8
+  },
+  {
+    "step": 2,
+    "query": "Đặt lịch khám Tim mạch cho bệnh nhân Nguyễn Văn Nam, mã BN2026001, với bác sĩ Nguyễn Minh An lúc 09:00 ngày 20/09/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Đã đủ dữ liệu từ công cụ để tổng hợp câu trả lời cuối cùng.",
+    "output": "Đặt lịch thành công. Mã xác nhận VM-20260920-ACB309: bệnh nhân Nguyễn Văn Nam khám với bác sĩ Nguyễn Minh An lúc 09:00 ngày 20/09/2026.",
+    "latency_ms": 383.46
+  },
+  {
+    "step": 1,
+    "query": "Hãy kiểm tra lịch của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, trong ngày 21/09/2026 và đặt khung giờ trống sớm nhất cho bệnh nhân Trần Thị Hoa, mã BN2026002.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "doctor_schedule_query",
+    "arguments": {
+      "doctor_name": "Nguyễn Minh An",
+      "specialty": "Tim mạch",
+      "appointment_date": "21/09/2026"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "doctor_id": "BS001",
+        "doctor_name": "Nguyễn Minh An",
+        "specialty": "Tim mạch",
+        "workplace": "Vinmec Times City",
+        "appointment_date": "21/09/2026",
+        "available_slots": [
+          "08:00",
+          "09:30",
+          "15:00"
+        ]
+      },
+      "message": "Có 3 khung giờ trống trong ngày 21/09/2026."
+    },
+    "latency_ms": 332.82
+  },
+  {
+    "step": 2,
+    "query": "Hãy kiểm tra lịch của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, trong ngày 21/09/2026 và đặt khung giờ trống sớm nhất cho bệnh nhân Trần Thị Hoa, mã BN2026002.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "book_medical_appointment",
+    "arguments": {
+      "patient_id": "BN2026002",
+      "patient_name": "Trần Thị Hoa",
+      "doctor_name": "Nguyễn Minh An",
+      "specialty": "Tim mạch",
+      "datetime_str": "08:00 21/09/2026"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "booking_id": "VM-20260921-A51808",
+        "patient_id": "BN2026002",
+        "patient_name": "Trần Thị Hoa",
+        "doctor_id": "BS001",
+        "doctor_name": "Nguyễn Minh An",
+        "specialty": "Tim mạch",
+        "workplace": "Vinmec Times City",
+        "datetime": "08:00 21/09/2026"
+      },
+      "message": "Đặt lịch thành công. Mã xác nhận VM-20260921-A51808: bệnh nhân Trần Thị Hoa khám với bác sĩ Nguyễn Minh An lúc 08:00 ngày 21/09/2026."
+    },
+    "latency_ms": 1418.9
+  },
+  {
+    "step": 3,
+    "query": "Hãy kiểm tra lịch của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, trong ngày 21/09/2026 và đặt khung giờ trống sớm nhất cho bệnh nhân Trần Thị Hoa, mã BN2026002.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Đã đủ dữ liệu từ công cụ để tổng hợp câu trả lời cuối cùng.",
+    "output": "Đặt lịch thành công. Mã xác nhận VM-20260921-A51808: bệnh nhân Trần Thị Hoa khám với bác sĩ Nguyễn Minh An lúc 08:00 ngày 21/09/2026.",
+    "latency_ms": 1750.98
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu lịch khám của bác sĩ Không Tồn Tại, chuyên khoa Tim mạch, vào ngày 20/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "doctor_schedule_query",
+    "arguments": {
+      "doctor_name": "Không Tồn Tại",
+      "specialty": "Tim mạch",
+      "appointment_date": "20/09/2026"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy bác sĩ 'Không Tồn Tại' thuộc chuyên khoa 'Tim mạch'."
+    },
+    "latency_ms": 1551.01
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu lịch khám của bác sĩ Không Tồn Tại, chuyên khoa Tim mạch, vào ngày 20/09/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Đã đủ dữ liệu từ công cụ để tổng hợp câu trả lời cuối cùng.",
+    "output": "Không tìm thấy bác sĩ 'Không Tồn Tại' thuộc chuyên khoa 'Tim mạch'.",
+    "latency_ms": 1611.46
   }
 ]

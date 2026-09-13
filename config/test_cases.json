@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, hãy giới thiệu ngắn gọn quy trình đặt lịch khám tại Vinmec.",
+    "expected_behavior": "Agent trả lời thông tin hướng dẫn chung, không gọi bất kỳ Tool nào và không đưa ra chẩn đoán y khoa.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tra cứu lịch làm việc của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, vào ngày 20/09/2026.",
+    "expected_behavior": "Agent gọi Tool 'doctor_schedule_query' với đúng tên bác sĩ, chuyên khoa và ngày khám; sau đó trình bày các khung giờ còn trống.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "appointment_booking",
+    "question": "Đặt lịch khám Tim mạch cho bệnh nhân Nguyễn Văn Nam, mã BN2026001, với bác sĩ Nguyễn Minh An lúc 09:00 ngày 20/09/2026.",
+    "expected_behavior": "Agent gọi Tool 'book_medical_appointment' với đúng mã bệnh nhân, tên bệnh nhân, bác sĩ, chuyên khoa và thời gian khám; sau đó trả về mã đặt lịch xác nhận.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Hãy kiểm tra lịch của bác sĩ Nguyễn Minh An, chuyên khoa Tim mạch, trong ngày 21/09/2026 và đặt khung giờ trống sớm nhất cho bệnh nhân Trần Thị Hoa, mã BN2026002.",
+    "expected_behavior": "Agent thực hiện chuỗi ReAct đa bước: gọi 'doctor_schedule_query' để lấy các khung giờ trống, chọn giờ sớm nhất từ Observation, rồi gọi 'book_medical_appointment' với thông tin tương ứng.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tra cứu lịch khám của bác sĩ Không Tồn Tại, chuyên khoa Tim mạch, vào ngày 20/09/2026.",
+    "expected_behavior": "Agent gọi 'doctor_schedule_query', nhận kết quả NOT_FOUND và thông báo lịch sự rằng không tìm thấy bác sĩ; không bịa đặt lịch khám hoặc tự tạo lịch hẹn.",
+    "complexity": "Medium"
+  }
+]
